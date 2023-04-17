@@ -1,0 +1,7 @@
+{
+  "name": "FAB",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
