@@ -64,7 +64,7 @@ const Register: React.FC<RegisterProps> = () => {
     lastName: "",
     email: "",
     mobile: "",
-    // country: "",
+   otp: "",
   };
 
   const {
@@ -221,14 +221,14 @@ const Register: React.FC<RegisterProps> = () => {
                         ></IonInput>
                       </IonItem>
                       <p>{errors.mobile?.message}</p>
-                      {/* <IonItem>
+                      <IonItem>
                         <IonInput
-                          label="Country"
+                          label="OTP"
                           labelPlacement="stacked"
                           clearInput={true}
                           placeholder="Enter Country"
-                          onIonInput={() => clearErrors(["country"])}
-                          {...register("country", {
+                          onIonInput={() => clearErrors(["otp"])}
+                          {...register("otp", {
                             required: "Country is Required",
                             maxLength: {
                               value: 10,
@@ -237,7 +237,7 @@ const Register: React.FC<RegisterProps> = () => {
                           })}
                         ></IonInput>
                       </IonItem>
-                      <p>{errors.country?.message}</p> */}
+                      <p>{errors.otp?.message}</p>
                     </IonList>
                     <IonButton type="submit" routerDirection="none">
                       REGISTER
