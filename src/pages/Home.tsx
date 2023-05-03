@@ -1,23 +1,49 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
-import './Home.css';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonRow,
+  IonCol,
+  IonFooter,
+} from "@ionic/react";
+import ExploreContainer from "../components/ExploreContainer";
+import "./Home.css";
 
 const Home: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
-          <IonTitle>Blank</IonTitle>
-        </IonToolbar>
+        <IonRow class="ion-align-items-center">
+          <IonCol size="6">
+            {" "}
+            <img src="magnatinew.png" />
+          </IonCol>
+          <IonCol size="6">
+            <a href="javascript:void(0);"> عربى </a>
+          </IonCol>
+        </IonRow>
       </IonHeader>
-      <IonContent fullscreen>
+      <ExploreContainer />
+      {/* <IonContent fullscreen>
         <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
-          </IonToolbar>
+        <IonRow class="ion-align-items-center">
+          <IonCol size="6" > <img src="fab.png"/></IonCol>
+          <IonCol size="6" ><a href="javascript:void(0);"> عربى </a></IonCol>
+        </IonRow>
         </IonHeader>
         <ExploreContainer />
-      </IonContent>
+      </IonContent> */}
+
+      <IonFooter>
+        <IonRow class="ion-align-items-center">
+          <IonCol size="12">
+            {" "}
+            Copyright (c) 2023 First Abu Dhabi Bank. All Rights Reserved.
+          </IonCol>
+        </IonRow>
+      </IonFooter>
     </IonPage>
   );
 };

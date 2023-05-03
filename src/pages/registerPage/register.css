@@ -1,0 +1,20 @@
+h1 {
+  text-align: center;
+}
+
+ion-input {
+  margin-top: 25px;
+}
+
+img {
+  height: 70px;
+  width: 150px;
+}
+
+p {
+  color: red;
+}
+
+.row {
+  height: 100%;
+}

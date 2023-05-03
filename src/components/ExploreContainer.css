@@ -22,3 +22,55 @@
 .container a {
   text-decoration: none;
 }
+
+.heading1{
+  color: #003087;
+      /* margin-bottom: 0.5rem; */
+    /* font-family: inherit; */
+    font-weight: light !important;
+    /* line-height: 1.2; */
+    font-size: 34px!important;
+}
+
+.heading2{
+  color: #003087;
+  /* margin-bottom: 0.5rem; */
+font-family: inherit;
+font-weight: bold;
+line-height: 1.2;
+font-size: 34px!important;
+}
+
+
+
+h1{
+  font-size: 20px !important;
+  color: #4a4a4a;
+  font-family: FS Matthew Medium,sans-serif !important;
+  font-weight: 550 !important ;
+  text-align:left;
+  margin: 15px 0 30px;
+  line-height: 1.2 !important;
+}
+
+ion-card{
+  padding:20px;
+  box-shadow: 0 0 10px #0000004d;
+}
+
+ion-button {
+  --background: transparent;
+  --color: #003087;
+  --border-radius: 0;
+  --border-color: #6ba4b8;
+  --border-style: solid;
+  --border-width: 1px;
+  /* --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25); */
+  --padding-top: 11px;
+  --padding-bottom: 10px;
+  /* padding: 11px 33px 10px */
+  --background-hover: transparent;
+  --background-activated: transparent;
+  --background-focused: transparent;
+  margin-top:25px
+}
