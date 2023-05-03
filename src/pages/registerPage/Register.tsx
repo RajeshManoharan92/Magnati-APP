@@ -220,7 +220,7 @@ const Register: React.FC<RegisterProps> = () => {
                           // value={formvalue.mobileNumber}
                         ></IonInput>
                       </IonItem>
-                      <p>{errors.mobileNumber?.message}</p>
+                      <p>{errors.mobile?.message}</p>
                       {/* <IonItem>
                         <IonInput
                           label="Country"
