@@ -231,8 +231,8 @@ const Register: React.FC<RegisterProps> = () => {
                           {...register("otp", {
                             required: "Country is Required",
                             maxLength: {
-                              value: 10,
-                              message: "Enter Ten Numbers",
+                              value: 5,
+                              message: "Enter five Numbers",
                             },
                           })}
                         ></IonInput>
