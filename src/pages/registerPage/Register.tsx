@@ -100,6 +100,10 @@ const Register: React.FC<RegisterProps> = () => {
     });
   };
 
+const sendOTP = () => {
+  console.log(Math.floor(100000 + Math.random() * 900000));
+}
+
   return (
     <div>
       <IonPage>
@@ -226,7 +230,7 @@ const Register: React.FC<RegisterProps> = () => {
                           label="OTP"
                           labelPlacement="stacked"
                           clearInput={true}
-                          placeholder="Enter Country"
+                          placeholder="Enter OTP"
                           onIonInput={() => clearErrors(["otp"])}
                           {...register("otp", {
                             required: "Country is Required",
@@ -238,7 +242,12 @@ const Register: React.FC<RegisterProps> = () => {
                         ></IonInput>
                       </IonItem>
                       <p>{errors.otp?.message}</p>
+                     
                     </IonList>
+
+                    <IonButton onClick={()=>sendOTP()} routerDirection="none">
+                      Send OTP
+                    </IonButton>
                     <IonButton type="submit" routerDirection="none">
                       REGISTER
                     </IonButton>
