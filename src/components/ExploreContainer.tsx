@@ -18,10 +18,10 @@ const ExploreContainer: React.FC<ContainerProps> = () => {
     <div className="container">
       <IonGrid>
         <IonRow class="ion-justify-content-center ion-align-items-center">
-          <IonCol >
+          <IonCol size="12" size-md="12" size-lg="6" >
             <IonRow>
               <IonCol size="12" className="heading1">
-                Online Banking
+                Easy Banking
               </IonCol>
             </IonRow>
             <IonRow>
@@ -30,7 +30,7 @@ const ExploreContainer: React.FC<ContainerProps> = () => {
               </IonCol>
             </IonRow>
           </IonCol>
-          <IonCol >
+          <IonCol size="12" size-md="12" size-lg="6">
             <IonCard>
               {/* <IonCardTitle>NOT REGISTER FOR ONLINE BANKING?</IonCardTitle> */}
               {/* <IonCardSubtitle></IonCardSubtitle> */}

@@ -5,7 +5,11 @@ import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
 import Register from "./pages/registerPage/Register"
 import Success from "./pages/successPage/success";
-
+import UserDetailsPage from "./pages/userDetailsPage/userDetailsPage";
+import AddAmountPage from "./pages/addAmountPage/addAmountPage";
+import AmountWithdraw from "./pages/withDrawAmount/withDrawAmount";
+import QrCodeScanner from "./pages/qrCodeScanner/qrCodeScanner";
+import UserHomePage from "./pages/userHomePage/userHomePage";
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -24,6 +28,9 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import TransactionHistoryPage from "./pages/login/transactionPage/transactionPage";
+import RegisterOTP from "./pages/OTPPage/otppage";
+// import QrCodeScanner from "./pages/qrCodeScanner/qrCodeScanner";
 
 setupIonicReact();
 
@@ -40,6 +47,16 @@ const App: React.FC = () => (
         <Route exact path="/success" component={Success} />
         
         <Route exact path="/login" component={Success} />
+
+        <Route exact path="/Userpage" component={UserDetailsPage} />
+
+        <Route exact path="/addAmount" component={AddAmountPage} />
+
+        <Route exact path="/withdrawAmount" component={AmountWithdraw} />
+        <Route exact path="/userHomePage" component={UserHomePage} />
+        <Route exact path="/transactionHistory" component={TransactionHistoryPage} />
+
+        <Route exact path="/registerOTP" component={RegisterOTP} />
 
       </IonRouterOutlet>
     </IonReactRouter>

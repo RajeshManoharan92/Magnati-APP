@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import "./register.css";
+// import "./register.css";
 import {
   IonFooter,
   IonHeader,
@@ -24,19 +24,33 @@ import {
   useIonViewDidEnter,
   withIonLifeCycle,
   useIonToast,
+  IonIcon
 } from "@ionic/react";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
-import RegisterOTP from "../OTPPage/otppage";
+import {
+  arrowBackOutline,
+  arrowForwardOutline,
+  cardOutline,
+  homeOutline,
+  listCircleOutline,
+  logoIonic,
+  logOutOutline,
+  scanOutline,
+  walletOutline,
+} from "ionicons/icons";
 
-interface RegisterProps {}
 
-const Register: React.FC<RegisterProps> = () => {
+interface UserDetailsPageProps {}
+
+const UserDetailsPage: React.FC<UserDetailsPageProps> = () => {
   const Navigate = useHistory();
 
   let initialized = false;
 
-  const [array, setarray] = useState<any>([]);
+  const [status, setstatus] = useState<any>(false);
+  const [activateButton, setactivateButton] = useState<any>(true);
+  const [counter, setcounter] = useState<any>(0);
 
   const [otp, setotp] = useState<any>();
 
@@ -44,34 +58,15 @@ const Register: React.FC<RegisterProps> = () => {
 
   const [otpdisabled, setotpdisabled] = useState<any>(true);
 
-  // useIonViewWillEnter(() => {
-  //   effect();
-  // }, []);
-
-  // const effect = async () => {
-  //   if (!initialized) {
-  //     initialized = true;
-  //     // My actual effect logic...
-  //     await axios
-  //       .get("https://jsonplaceholder.typicode.com/posts")
-  //       .then((res) => setarray(res.data));
-  //   }
-  // };
-
-  // console.log(array, "array");
-
-  //   useIonViewWillEnter(() => {
-  //       axios.get("https://jsonplaceholder.typicode.com/posts").then((res)=>console.log(res))
-
-  // });
-
   var initialValues = {
     firstName: "",
     middleName: "",
     lastName: "",
     email: "",
     mobile: "",
-    otp: "",
+    cardNumber: "",
+    status: "",
+    amount: "",
   };
 
   const {
@@ -86,31 +81,77 @@ const Register: React.FC<RegisterProps> = () => {
     defaultValues: initialValues,
   });
 
+  useEffect(() => {
+    effect();
+  }, [counter]);
+
+  const effect = async () => {
+    const userId = localStorage.getItem("userId");
+    if (!initialized) {
+      initialized = true;
+      // My actual effect logic...
+      await axios
+        .post("http://192.168.0.132:8000/getUserStatus", {
+          userId: userId,
+        })
+        .then((res) => {
+          console.log(res.data, "useeffect");
+          setValue("email", res.data.email);
+          setValue("firstName", res.data.firstName);
+          setValue("lastName", res.data.lastName);
+          setValue("middleName", res.data.middleName);
+          setValue("mobile", res.data.mobile);
+          setValue("status", res.data.status);
+          setValue("amount", res.data.amount);
+          setValue(
+            "cardNumber",
+            res.data.cardNumbers[0]?.cardNumber
+              ? res.data.cardNumbers[0]?.cardNumber
+              : ""
+          );
+          setactivateButton(res.data.status == "Active" ? false : true);
+          setstatus(res.data.status == "Active" ? true : false);
+        });
+    }
+  };
+
+  // console.log(array, "array");
+
+  //   useIonViewWillEnter(() => {
+  //       axios.get("https://jsonplaceholder.typicode.com/posts").then((res)=>console.log(res))
+
+  // });
+
   const onSubmit = async (data: any) => {
     console.log(data, "data");
-    const redata = data;
     await axios
-      .post("http://192.168.0.132:8000/customerOnboarding", redata)
+      .post("http://192.168.0.132:8000/customerOnboarding")
       .then((res) => {
         console.log(res.data, "data");
-        localStorage.setItem("userId", res.data.userId ? res.data.userId : "");
         reset();
-         Navigate.push("/registerOTP");
-        // presentToast("top");
+        Navigate.push("/");
+        presentToast("top");
       })
       .catch((err) => console.log(err));
   };
 
+  const [present] = useIonToast();
 
+  const presentToast = (position: "top" | "middle" | "bottom") => {
+    present({
+      message: "Registration Successfull",
+      duration: 3000,
+      position: position,
+      color: "primary",
+    });
+  };
 
   const sendOTP = () => {
     // console.log(Math.floor(100000 + Math.random() * 900000));
     const val = Math.floor(100000 + Math.random() * 900000);
-    const newotp = val.toString();
-    console.log(newotp, "iv");
-    setotp(newotp);
-
-    setValue("otp", newotp);
+    setotp(Math.floor(100000 + Math.random() * 900000));
+    // initialValues.otp = val.toString();
+    // console.log(initialValues.otp, "iv");
     setdisabled(false);
     setotpdisabled(true);
   };
@@ -120,6 +161,22 @@ const Register: React.FC<RegisterProps> = () => {
     setotp("");
     setdisabled(true);
     setotpdisabled(false);
+  };
+
+  const activateUser = async () => {
+    const userId = localStorage.getItem("userId");
+    await axios
+      .post("http://192.168.0.132:8000/createCard", {
+        userId: userId,
+      })
+      .then((res) => {
+        console.log(res, "res");
+        if (res.data.status == "Success") {
+          setstatus(true);
+          setcounter(counter+1)
+        }
+      })
+      .catch((err) => console.log(err, "err"));
   };
 
   return (
@@ -142,7 +199,7 @@ const Register: React.FC<RegisterProps> = () => {
             <IonCol size="12" size-md="8" size-lg="4">
               <IonCard>
                 <IonCardHeader>
-                  <IonCardTitle>Registration Form</IonCardTitle>
+                  <IonCardTitle>User Details</IonCardTitle>
                 </IonCardHeader>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -243,35 +300,89 @@ const Register: React.FC<RegisterProps> = () => {
                         ></IonInput>
                       </IonItem>
                       <p>{errors.mobile?.message}</p>
-                      {/* <IonItem>
+
+                      <IonItem>
                         <IonInput
-                          label="OTP"
-                          value={otp}
+                          label="Status"
                           labelPlacement="stacked"
                           clearInput={true}
-                          placeholder="Enter OTP"
+                          placeholder=""
                           onIonInput={() => setdisabled(true)}
-                          {...register("otp", {
-                            required: "OTP is Required",
+                          {...register("status", {
+                            required: "Stauts is Required",
                             // maxLength: {
                             //   value: 6,
                             //   message: "Enter six Numbers",
                             // },
                           })}
                         ></IonInput>
-                      </IonItem> */}
-                      {/* <p>{errors.otp?.message}</p> */}
+                      </IonItem>
+                      <p>{errors.status?.message}</p>
+
+                      {status ? (
+                        <>
+                          <IonItem>
+                            <IonInput
+                              label="Card Number"
+                              labelPlacement="stacked"
+                              clearInput={true}
+                              placeholder=""
+                              onIonInput={() => setdisabled(true)}
+                              {...register("cardNumber", {
+                                required: "OTP is Required",
+                                // maxLength: {
+                                //   value: 6,
+                                //   message: "Enter six Numbers",
+                                // },
+                              })}
+                            ></IonInput>
+                          </IonItem>
+                          <p>{errors.cardNumber?.message}</p>
+
+                          
+                        </>
+                      ) : (
+                        <></>
+                      )}
                     </IonList>
 
-                    <IonButton
-                      type="submit"
-                      // disabled={disabled}
-                      routerDirection="none"
-                    >
-                      REGISTER
-                    </IonButton>
+                    {/* {status ? (
+                      <>
+                        <IonButton
+                          // onClick={() => sendOTP()}
+                          // disabled={otpdisabled}
+                          routerLink="/addAmount"
+                          routerDirection="none"
+                        >
+                          Add Amount
+                        </IonButton>
+                        <IonButton
+                          // type="submit"
+                          // disabled={disabled}
+                          routerLink="/withdrawAmount"
+                          routerDirection="none"
+                        >
+                          Withdraw Amount
+                        </IonButton>
+                      </>
+                    ) : (
+                      <></>
+                    )} */}
 
-                    
+                    {/* {activateButton ? (
+                      <>
+                        <IonButton
+                          // type="submit"
+                          // disabled={disabled}
+                          onClick={() => activateUser()}
+                          routerDirection="none"
+                        >
+                          Activate User
+                        </IonButton>
+                      </>
+                    ) : (
+                      <></>
+                    )} */}
                   </IonCardContent>
                 </form>
               </IonCard>
@@ -293,19 +404,50 @@ const Register: React.FC<RegisterProps> = () => {
             : ""}
         </IonContent> */}
 
-        
+       
+     <IonFooter>
+      <IonRow>
+          <IonCol><IonIcon
+                    className="tabicon"
+                    color="primary"
+                    icon={arrowBackOutline}
+                    onClick={()=>Navigate.goBack()}
+                  ></IonIcon></IonCol>
+          <IonCol><IonIcon
+                    className="tabicon"
+                    color="primary"
+                    icon={homeOutline}
+                    onClick={()=>Navigate.push("/userHomePage")}
 
-        <IonFooter>
-          <IonRow class="ion-align-items-center">
-            <IonCol size="12">
-              {" "}
-              Copyright (c) 2023 Magnati. All Rights Reserved.
-            </IonCol>
-          </IonRow>
-        </IonFooter>
+                  ></IonIcon></IonCol>
+          <IonCol><IonIcon
+                    className="tabicon"
+                    color="primary"
+                    icon={logOutOutline}
+                    onClick={() => {
+                      localStorage.clear();
+                      Navigate.push("/");
+                    }}
+
+                  ></IonIcon></IonCol>
+          <IonCol><IonIcon
+                    className="tabicon"
+                    color="primary"
+                    icon={arrowForwardOutline}
+                    onClick={()=>Navigate.goForward()}
+
+                  ></IonIcon></IonCol>
+        </IonRow>
+        <IonRow class="ion-align-items-center">
+          <IonCol size="12">
+            {" "}
+            Copyright (c) 2023 Magnati. All Rights Reserved.
+          </IonCol>
+        </IonRow>
+      </IonFooter>
       </IonPage>
     </div>
   );
 };
 
-export default Register;
+export default UserDetailsPage;

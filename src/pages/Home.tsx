@@ -40,7 +40,7 @@ const Home: React.FC = () => {
         <IonRow class="ion-align-items-center">
           <IonCol size="12">
             {" "}
-            Copyright (c) 2023 First Abu Dhabi Bank. All Rights Reserved.
+            Copyright (c) 2023 Magnati. All Rights Reserved.
           </IonCol>
         </IonRow>
       </IonFooter>

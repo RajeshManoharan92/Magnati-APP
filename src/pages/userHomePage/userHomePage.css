@@ -1,0 +1,33 @@
+.card{
+    background-color: white ;
+    height: 13vh;
+    text-align: center;
+    justify-content: center;
+    vertical-align: middle;
+    display: flex;
+    margin: 16px 16px;
+    padding: 16px;
+}
+
+.cardtext{
+    color: #106cf8;
+    font-weight: bold;
+}
+
+.icon{
+    color: #106cf8;
+    font-size: 50px;
+}
+
+.tabicon{
+    color: #106cf8;
+    font-size: 32px;
+}
+
+h2{
+    font-weight: bold;
+}
+
+.swiper{
+    height: 17vh !important;
+}
